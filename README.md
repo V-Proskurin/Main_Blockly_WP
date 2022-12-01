@@ -13,5 +13,10 @@ git read-tree --prefix=blockly_fork/ -u blockly_fork/develop
 
 Также есть отдельный репозиторий WP_blockly и он тоже сюда входит. Но как подпапка. Когда его синхронизируешь, он только подпапку синхронизирует.
 
+Зафиксируйте изменения, чтобы обеспечить их безопасность.
+
+git commit -m "Subtree merged in blockly_fork"
+> [main fe0ca25] Subtree merged in blockly_fork
+
 Для обновления от подрепозитория https://github.com/V-Proskurin/blockly-1 надо сделать команду:
 git pull -s subtree blockly_fork develop
