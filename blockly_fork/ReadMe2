@@ -12,3 +12,28 @@
 жмем «Merge pull request» и подтверждаем это действие — все
 https://habr.com/ru/post/233719/
 https://youtu.be/rQwq83hA1lw
+
+Вставка подрепозитория в репозиторий
+https://docs.github.com/ru/get-started/using-git/about-git-subtree-merges#adding-a-new-repository-as-a-subtree
+# Main_Blockly_WP
+Как синхронизировать поддерево
+В репозитории вложен репозиторий поддерево - fork блокли
+https://docs.github.com/ru/get-started/using-git/about-git-subtree-merges#adding-a-new-repository-as-a-subtree
+
+git remote add -f blockly_fork https://github.com/V-Proskurin/blockly-1
+
+git merge -s ours --no-commit --allow-unrelated-histories blockly_fork/develop
+
+git read-tree --prefix=blockly_fork/ -u blockly_fork/develop
+
+Теперь подключен подрепозиторий https://github.com/V-Proskurin/blockly-1, который можно от этого форк обновлять. И сам fork обновлять уже от блокли.
+
+Также есть отдельный репозиторий WP_blockly и он тоже сюда входит. Но как подпапка. Когда его синхронизируешь, он только подпапку синхронизирует.
+
+Зафиксируйте изменения, чтобы обеспечить их безопасность.
+
+git commit -m "Subtree merged in blockly_fork"
+> [main fe0ca25] Subtree merged in blockly_fork
+
+Для обновления от подрепозитория https://github.com/V-Proskurin/blockly-1 надо сделать команду:
+git pull -s subtree blockly_fork develop
