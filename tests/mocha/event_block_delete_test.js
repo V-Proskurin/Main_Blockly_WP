@@ -12,35 +12,13 @@ import {sharedTestSetup, sharedTestTeardown} from './test_helpers/setup_teardown
 
 suite('Block Delete Event', function() {
   setup(function() {
-    const {clock} = sharedTestSetup.call(this, {fireEventsNow: false});
-    this.clock = clock;
+    sharedTestSetup.call(this);
     defineRowBlock();
     this.workspace = new Blockly.Workspace();
   });
 
   teardown(function() {
     sharedTestTeardown.call(this);
-  });
-
-  suite('Receiving', function() {
-    test('blocks receive their own delete events', function(done) {
-      Blockly.Blocks['test'] = {
-        onchange: function(e) { },
-      };
-      // Need to stub the definition, because the property on the definition is
-      // what gets registered as an event listener.
-      const spy = sinon.spy(Blockly.Blocks['test'], 'onchange');
-      const testBlock = this.workspace.newBlock('test');
-
-      testBlock.dispose();
-      this.clock.tick(2);  // Fire events. The built-in timeout is 0.
-
-      const deleteClass = eventUtils.get(eventUtils.BLOCK_DELETE);
-      chai.assert.isTrue(
-          spy.calledWith(sinon.match.instanceOf(deleteClass)),
-          'Expected the block to receive its own delete event.');
-      done();
-    });
   });
 
   suite('Serialization', function() {
